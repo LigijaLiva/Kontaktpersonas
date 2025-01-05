@@ -23,7 +23,7 @@ def initialize_database():
         conn = sqlite3.connect(database)
         cursor = conn.cursor()
         # Izpilda migrācijas skriptus
-        with open('migrations/001_create_contacts_table.sql', 'r') as f:
+        with open('migrations/create_contacts_table.sql', 'r') as f:
             cursor.executescript(f.read())
         conn.commit()
         conn.close()
