@@ -7,7 +7,7 @@ from pathlib import Path
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-# Iegūst iestatījumus
+# Iegūst iestatījumus no konfigurācijas faila
 database = config['settings']['database']
 log_level = config['settings']['log_level']
 
@@ -22,7 +22,7 @@ def initialize_database():
         logger.info(f'Izveido datubāzi: {database}')
         conn = sqlite3.connect(database)
         cursor = conn.cursor()
-        # Izpilda migrācijas
+        # Izpilda migrācijas skriptus
         with open('migrations/001_create_contacts_table.sql', 'r') as f:
             cursor.executescript(f.read())
         conn.commit()
@@ -30,7 +30,7 @@ def initialize_database():
     else:
         logger.info(f'Datubāze {database} jau pastāv.')
 
-# Funkcijas kontaktu pievienošanai, skatīšanai, rediģēšanai un dzēšanai
+# Pievieno funkcijas kontaktu pievienošanai, skatīšanai, rediģēšanai un dzēšanai
 def add_contact(name, email, phone=None):
     try:
         conn = sqlite3.connect(database)
