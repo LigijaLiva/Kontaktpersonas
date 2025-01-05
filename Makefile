@@ -1,10 +1,13 @@
-.PHONY: init_db migrate_db test
+.PHONY: init_db migrate_db test run
 
 init_db:
-    python main.py
+	python main.py
 
 migrate_db:
-    python migrate.py
+	mysql -u$(user) -p$(password) $(database) < migrations/create_contacts_table.sql
 
 test:
-    pytest tests/
+	pytest tests/
+
+run:
+	python main.py
